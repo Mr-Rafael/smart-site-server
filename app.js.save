@@ -1,0 +1,93 @@
+var express = require('express')
+  , phoenix = require('phoenix-js')
+  , app = express()
+  , socket = new phoenix.Socket ( 'ws://192.168.:4000/socket' ,    { transport: require ( 'websocket' ) .w3cwebsocket } )
+  , meter = require('./controllers/meter.js')
+  , CronJobManager = require('cron-job-manager')
+  , timer = require('./controllers/readTime.js')
+
+app.use(require('./controllers'))
+
+// TODO:
+// - Make Waterfall.
+// - Make it error proff.
+// - Check CRONs. 90%
+
+app.listen(4000, function(){
+  // Connect socket
+  socket.connect()
+  // Get channelName
+  var channelName = "room_meter:1";
+  channel = socket.channel(channelName, {})
+  // console.log("I got the current jobs: " + manager)
+
+  // This will join the channel.
+  channel.join().receive("ok", function (resp) {
+    console.log("CONNECTED TO " + channelName)
+    console.log("Listening 4000...")
+
+  }).receive("error", function (resp) {
+    console.log("Unable to join", resp);
+  });
+
+  // start manager after creating channel.
+  var manager = timer.createManager(channel)
+
+  // Here I get any entry.
+  channel.on("create:entry", function (msg) {
+        // Before updating the data, set the new time to the current time
+        console.log("received entry");
+        //console.log(msg)
+      });
+
+  // Here I get the time function
+  channel.on('set:time', function(response) {
+      // response is a JSON like this:
+      // response = {
+      //  meter_id: id,
+      //  time: seconds,
+      // }
+
+      // Create the key for the job.
+      var key = 'meter_' + response['id']
+      // Create the time for the updating task.
+      var time = '*/' + response['time'] + ' * * * * *'
+
+      // First check if the job exists.
+      if (manager.exists(key)) {
+        // If it exists then I must update it.
+        manager = timer.updateJob(manager, key, time)
+
+      } else {
+        // If it's a new job then I must create it.
+        manager = timer.makeJob(manager, key, time,
+          function() {
+            // Here I have to create the function
+            // for the new task.
+            var data = ''
+
+            // HUGE PROBLEM HERE!!!
+            // How the hell do I know to what
+            // meter I'm talking to?!
+            // Perhaps I need a function to set the
+            // meter IP.
+
+            meter.getResponse(function(str) {
+              data = JSON.parse(str)
+
+              var test = {
+                entry: {
+                  meter_id: 1,
+                  sonnar: data['sonnar'],
+                  temperature: data['temperature']
+                }
+              }
+
+              channel.push('create:entry', test)
+              //console.log("Created entry")
+          })
+      })
+    }
+
+  })
+})

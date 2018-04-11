@@ -1,0 +1,8 @@
+This folder contains all the templates which are rendered by your application.
+This is the place where usually the designers in your team will work.
+
+You would like to have one sub-folder for templates corresponding to each of
+your controllers. This way, you will group the templates for the same tasks
+together.
+
+There're no Views in this project.
