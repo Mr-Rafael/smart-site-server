@@ -1,0 +1,8 @@
+In this folder you'll place any file you might need to acces from your code
+but don't want it to be on the server/database. It's mostly for local scripts
+or some metadata.
+
+In this project we'll need the following locals:
+- readPreasure.py
+- readVolume.py
+- local_IDs.info
