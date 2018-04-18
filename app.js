@@ -147,7 +147,34 @@ app.listen(4000, function(){
             console.log(JSON.parse(resp.tank_length));
             console.log(' http://'+SITE_METER.ip+'/configData');
             // var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:55, d:10, meterId: 2, vol:5555}" http://192.168.1.102/configData';
-            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://'+SITE_METER.ip+'/configData';
+            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.1.101/configData';
+            console.log(curl);
+            var child = shell.exec(curl,
+              {async:true});
+            child.stdout.on('data', function(data) {
+              if(data=='{success:true}'){
+                console.log("Succesfully updated.");
+                // Request to enpoint to save changes in database
+                request({ url: 'http://'+'52.203.56.116:4000'+'/api/sensor/update_meter/'+SITE_METER.mac,
+                  method: 'PUT',
+                  json: {'meter':{
+                        'tank_diameter': parseFloat(tank_diameter),
+                        'tank_length': parseFloat(tank_length),
+                        'tank_capacity': parseFloat(total_volume)
+                        }
+                  }},
+                  function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                      console.log(body);
+                    }
+                    else{
+                      console.log(response);
+                    }
+
+                })
+              }
+            });
+            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.1.102/configData';
             console.log(curl);
             var child = shell.exec(curl,
               {async:true});
@@ -343,5 +370,3 @@ app.listen(4000, function(){
 
     });
 });
-
-
