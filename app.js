@@ -147,7 +147,7 @@ app.listen(4000, function(){
             console.log(JSON.parse(resp.tank_length));
             console.log(' http://'+SITE_METER.ip+'/configData');
             // var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:55, d:10, meterId: 2, vol:5555}" http://192.168.1.102/configData';
-            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.1.101/configData';
+            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.2.101/configData';
             console.log(curl);
             var child = shell.exec(curl,
               {async:true});
@@ -174,7 +174,7 @@ app.listen(4000, function(){
                 })
               }
             });
-            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.1.102/configData';
+            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.2.102/configData';
             console.log(curl);
             var child = shell.exec(curl,
               {async:true});
