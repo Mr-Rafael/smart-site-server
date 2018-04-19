@@ -297,7 +297,7 @@ app.listen(4000, function(){
                         meter_id: SITE_METER.mac,
                         volume: parseFloat(avg),
                         is_on: last_is_on,
-                        voltage: parseFloat(last_voltage),
+                        voltage: parseFloat(last_voltage) + 0.01,
                         temperature: parseFloat(36.5),
                         motor_time: motor_time,
                         motor_consumption: CONSUMPTION_RATE_PER_SECOND*motor_time
