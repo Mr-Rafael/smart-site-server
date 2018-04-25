@@ -26,6 +26,11 @@ var LOCALS_DIR = './locals/gas-meters.json';
 var TIME_TO_SEND = 60000; // 1 Minute
 var motor_time = 0;
 var CONSUMPTION_RATE_PER_SECOND = 0.000236111;
+
+var pi = 3.141593;
+var diameter = 147.3;
+var length = 182.88;
+
 function getChannel(id){
   for (var i = 0; i<channels.length; i++){
     if(id === channels[i].meter_id){
@@ -267,8 +272,8 @@ app.listen(4000, function(){
     app.post('/send-gas-level', function(req, res){
         console.log("--> Fuel Entry Received: ");
         console.log(req.body);
-        if(req.body.level){
-            var level = req.body.level;
+        if(req.body.distance){
+            var level = req.body.distance;
             if (level > 10000){
                 level = 10000;
             }
@@ -290,6 +295,10 @@ app.listen(4000, function(){
 
                 // console.log(gas_array);
                 var avg = sum/gas_array.length;
+                console.log("AVERAGE DISTANCE");
+                console.log(avg);
+                var radius = 0.5*diameter;
+                avg = pi*radius - radius*radius*Math.acos((radius-avg)/radius) + (radius - avg)*Math.sqrt(2*radius*avg - avg*avg);
                 console.log("LAST VOLTAGE");
                 console.log(last_voltage);
                 var data = {
