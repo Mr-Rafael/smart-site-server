@@ -28,8 +28,10 @@ var motor_time = 0;
 var CONSUMPTION_RATE_PER_SECOND = 0.000236111;
 
 var pi = 3.141593;
-var diameter = 147.3;
+var diameter = 146.5;
 var length = 182.88;
+// Calibracion : -2.5 para el US100 (0 para Astillero), -9.1 para el ULM
+var calibration = 0;
 
 function getChannel(id){
   for (var i = 0; i<channels.length; i++){
@@ -294,7 +296,7 @@ app.listen(4000, function(){
                 }
 
                 // console.log(gas_array);
-                var avg = sum/gas_array.length;
+                var avg = (sum/gas_array.length) + calibration;
                 console.log("AVERAGE DISTANCE");
                 console.log(avg);
                 var radius = 0.5*diameter;
