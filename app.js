@@ -312,7 +312,7 @@ app.listen(4000, function(){
                         meter_id: SITE_METER.mac,
                         volume: parseFloat(avg.toFixed(2)),
                         is_on: last_is_on,
-                        voltage: parseFloat((last_voltage + 0.01).toFixed(2)),
+                        voltage: parseFloat(last_voltage.toFixed(2)),
                         temperature: parseFloat(36.5),
                         motor_time: motor_time,
                         motor_consumption: CONSUMPTION_RATE_PER_SECOND*motor_time
@@ -362,6 +362,7 @@ app.listen(4000, function(){
                 last_is_on = true;
             }
             last_voltage = req.body.battery_voltage;
+			last_voltage += 0.01;
 
             var now =Date.now();
             last_time = now;
