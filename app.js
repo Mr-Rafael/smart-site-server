@@ -300,7 +300,7 @@ app.listen(4000, function(){
                 console.log("AVERAGE DISTANCE");
                 console.log(avg);
                 var radius = 0.5*diameter;
-                avg = pi*radius*radius - radius*radius*Math.acos((radius-avg)/radius) + (radius - avg)*Math.sqrt(2*radius*avg - avg*avg);
+                avg = (pi*radius*radius - radius*radius*Math.acos((radius-avg)/radius) + (radius - avg)*Math.sqrt(2*radius*avg - avg*avg))*0.000264172;
                 console.log("LAST VOLTAGE");
                 console.log(last_voltage);
                 var data = {
