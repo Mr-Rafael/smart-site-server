@@ -292,7 +292,7 @@ app.listen(4000, function(){
                 // Getting average
                 var sum = 0;
                 for( var i = 0; i < gas_array.length; i++ ){
-                    sum += parseInt( gas_array[i], 10 ); //don't forget to add the base
+                    sum += parseFloat( gas_array[i], 10 ); //don't forget to add the base
                 }
 
                 // console.log(gas_array);
@@ -300,7 +300,11 @@ app.listen(4000, function(){
                 console.log("AVERAGE DISTANCE");
                 console.log(avg);
                 var radius = 0.5*diameter;
-                avg = (pi*radius*radius - radius*radius*Math.acos((radius-avg)/radius) + (radius - avg)*Math.sqrt(2*radius*avg - avg*avg))*0.000264172;
+				if(avg >= 0.0 && avg <= diameter) {
+					avg = (pi*radius*radius - radius*radius*Math.acos((radius-avg)/radius) + (radius - avg)*Math.sqrt(2*radius*avg - avg*avg))*0.000264172;
+				} else {
+					avg = 0.001;
+				}
                 console.log("LAST VOLTAGE");
                 console.log(last_voltage);
                 var data = {
