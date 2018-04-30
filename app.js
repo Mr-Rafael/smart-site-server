@@ -266,7 +266,7 @@ app.listen(4000, function(){
                 var data = {
                     entry: {
                         meter_id: SITE_METER.mac,
-                        volume: parseFloat(avg),
+                        volume: parseFloat(avg) + 0.01,
                         is_on: last_is_on,
                         voltage: parseFloat(last_voltage) + 0.01,
                         temperature: parseFloat(36.5),
