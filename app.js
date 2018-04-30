@@ -256,7 +256,7 @@ app.listen(4000, function(){
                 // Getting average
                 var sum = 0;
                 for( var i = 0; i < gas_array.length; i++ ){
-                    sum += parseInt( gas_array[i], 10 ); //don't forget to add the base
+                    sum += parseFloat( gas_array[i]); //don't forget to add the base
                 }
 
                 // console.log(gas_array);
