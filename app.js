@@ -174,34 +174,6 @@ app.listen(4000, function(){
                 })
               }
             });
-            var curl = 'curl -H "Content-type: application/json" -X POST -d "{l:'+tank_length+', d:'+tank_diameter+', vol: '+total_volume+'}" http://192.168.2.102/configData';
-            console.log(curl);
-            var child = shell.exec(curl,
-              {async:true});
-            child.stdout.on('data', function(data) {
-              if(data=='{success:true}'){
-                console.log("Succesfully updated.");
-                // Request to enpoint to save changes in database
-                request({ url: 'http://'+'52.203.56.116:4000'+'/api/sensor/update_meter/'+SITE_METER.mac,
-                  method: 'PUT',
-                  json: {'meter':{
-                        'tank_diameter': parseFloat(tank_diameter),
-                        'tank_length': parseFloat(tank_length),
-                        'tank_capacity': parseFloat(total_volume)
-                        }
-                  }},
-                  function (error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                      console.log(body);
-                    }
-                    else{
-                      console.log(response);
-                    }
-
-                })
-              }
-            });
-
           });
           channel['channel'].on("update:success:tank", function (resp) {
             console.log("-----------------------------------------UPDATING TANK SUCCESFULLY-----------------------------------");
