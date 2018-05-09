@@ -239,10 +239,12 @@ app.listen(4000, function(){
         console.log("--> Fuel Entry Received: ");
         console.log(req.body);
         if(req.body.level){
-            var level = req.body.level;
+            var level = req.body.distance;
             if (level > 10000){
                 level = 10000;
             }
+			
+			level = 120.65 * 103.2 * level * 0.000264172;
 
             channel = getChannel(SITE_METER.mac);
             if(MAX_DATA_POINTS_AVERAGE > gas_array.length){
