@@ -245,7 +245,7 @@ app.listen(4000, function(){
 			
 			level = 120.65 * 103.2 * level * 0.000264172;
 			
-			console.log("{ level: "+level+", distance: "+req.body.distance" }");
+			console.log("{ level: "+level+", distance: "+req.body.distance+" }");
 
             channel = getChannel(SITE_METER.mac);
             if(MAX_DATA_POINTS_AVERAGE > gas_array.length){
