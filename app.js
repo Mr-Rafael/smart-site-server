@@ -258,6 +258,10 @@ app.listen(4000, function(){
                 for( var i = 0; i < gas_array.length; i++ ){
                     sum += parseFloat( gas_array[i]); //don't forget to add the base
                 }
+				
+				var temp = shell.cat('cat /sys/class/thermal/thermal_zone0/temp') / 100.0;
+				console.log("Temperature: ");
+				console.log(temp);
 
                 // console.log(gas_array);
                 var avg = sum/gas_array.length;
