@@ -259,7 +259,7 @@ app.listen(4000, function(){
                     sum += parseFloat( gas_array[i]); //don't forget to add the base
                 }
 				
-				var temp = shell.cat('cat /sys/class/thermal/thermal_zone0/temp') / 100.0;
+				var temp = shell.cat('/sys/class/thermal/thermal_zone0/temp') / 1000.0;
 				console.log("Temperature: ");
 				console.log(temp);
 
