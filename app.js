@@ -237,14 +237,15 @@ app.listen(4000, function(){
     // ROUTES:
     app.post('/send-gas-level', function(req, res){
         console.log("--> Fuel Entry Received: ");
-        console.log(req.body);
-        if(req.body.level){
+        if(req.body.distance){
             var level = req.body.distance;
             if (level > 10000){
                 level = 10000;
             }
 			
 			level = 120.65 * 103.2 * level * 0.000264172;
+			
+			console.log("{ level: "+level+", distance: "+req.body.distance" }");
 
             channel = getChannel(SITE_METER.mac);
             if(MAX_DATA_POINTS_AVERAGE > gas_array.length){
