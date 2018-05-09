@@ -273,7 +273,7 @@ app.listen(4000, function(){
                         volume: parseFloat(avg) + 0.01,
                         is_on: last_is_on,
                         voltage: parseFloat(last_voltage) + 0.01,
-                        temperature: parseFloat(36.5),
+                        temperature: parseFloat(temp) + 0.01,
                         motor_time: motor_time,
                         motor_consumption: CONSUMPTION_RATE_PER_SECOND*motor_time
                     }
