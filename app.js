@@ -289,6 +289,27 @@ app.listen(4000, function(){
                         console.log("-----------TIMEOOUT---------------");
                         socket.onClose(function(){});
                         socket.pushBuffer = [];
+						socket.connect();
+						channelLobby.join()
+							.receive("ok", function (resp) {
+								console.log("CONNECTED TO " + channelNameLobby);
+								console.log(resp);
+							});
+						channel['channel'].join()
+							.receive("ok", function (resp) {
+								var connectedId = channel['channel'].topic.split(":")[1];
+								meter = findMeterData(parseInt(connectedId));
+								console.log("CONNECTED TO " + channel['channel'].topic);
+								console.log(resp);
+							})
+		socket.onOpen(function(){
+        console.log("connection open");
+    });
+    socket.onError(function(){ console.log("there was an error with the connection!")});
+    socket.onClose(function(){
+        console.log("DROP");
+        socket.connect();
+    });
 
                     });
             }
