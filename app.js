@@ -290,18 +290,7 @@ app.listen(4000, function(){
                         socket.onClose(function(){});
                         socket.pushBuffer = [];
 						socket.connect();
-						channelLobby.join()
-							.receive("ok", function (resp) {
-								console.log("CONNECTED TO " + channelNameLobby);
-								console.log(resp);
-							});
-						channel['channel'].join()
-							.receive("ok", function (resp) {
-								var connectedId = channel['channel'].topic.split(":")[1];
-								meter = findMeterData(parseInt(connectedId));
-								console.log("CONNECTED TO " + channel['channel'].topic);
-								console.log(resp);
-							})
+						shell.exec("sudo reboot");
 		socket.onOpen(function(){
         console.log("connection open");
     });
