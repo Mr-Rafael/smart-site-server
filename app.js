@@ -18,6 +18,7 @@ var SITE_METER = {};
 var meters = [];
 var MAKE_REQUESTS_TO_ARDUINO = true;
 var gas_array = [];
+var temp_array = [];
 var MAX_DATA_POINTS_AVERAGE = 35;
 var last_is_on = false;
 var last_voltage = 0.0;
@@ -243,28 +244,39 @@ app.listen(4000, function(){
             if (level > 10000){
                 level = 10000;
             }
+			
+			var temp = shell.cat('/sys/class/thermal/thermal_zone0/temp') / 1000.0;
+			console.log("Temperature: ");
+			console.log(temp);
 
             channel = getChannel(SITE_METER.mac);
             if(MAX_DATA_POINTS_AVERAGE > gas_array.length){
 
                 gas_array.push(level);
+				temp_array.push(temp);
+				
                 // console.log(gas_array);
             }
             else{
                 gas_array.shift();
+				temp_array.shift();
                 gas_array.push(level);
+				temp_array.push(temp);
                 // Getting average
                 var sum = 0;
                 for( var i = 0; i < gas_array.length; i++ ){
                     sum += parseFloat( gas_array[i]); //don't forget to add the base
                 }
-				
-				var temp = shell.cat('/sys/class/thermal/thermal_zone0/temp') / 1000.0;
-				console.log("Temperature: ");
-				console.log(temp);
 
                 // console.log(gas_array);
                 var avg = sum/gas_array.length;
+				
+				for ( var i = 0; i < temp_array.length; i++ ){
+					sum += parseFloat( temp_array[i]);
+				}
+				
+				var temp = sum/temp_array.length;
+				
                 console.log("LAST VOLTAGE");
                 console.log(last_voltage);
                 var data = {
