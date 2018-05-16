@@ -349,7 +349,7 @@ app.listen(4000, function(){
 				
 			
             if (channel){
-                channel.push('motor:state', {'motor': { req.body.is_on, req.body.meter_id }, 'meter_id': SITE_METER.mac}, 15000)
+                channel.push('motor:state', {'motor': { 'is_on': req.body.is_on, 'meter_id': req.body.meter_id }, 'meter_id': SITE_METER.mac}, 15000)
                     .receive("ok", function(msg){ console.log("created message", msg) })
                     .receive("error", function(reasons){console.log("Failed to save data.", reasons)} )
                     .receive("timeout", function(){console.log("Networking issue...")} );
