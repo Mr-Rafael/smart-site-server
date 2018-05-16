@@ -339,6 +339,8 @@ app.listen(4000, function(){
         if (test_is_on != last_is_on){
 			
 			console.log("Generator has changed state.");
+			console.log(test_is_on);
+			console.log(last_is_on);
 			
 			channel = getChannel(SITE_METER.mac);
 			
