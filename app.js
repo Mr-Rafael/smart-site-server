@@ -367,6 +367,7 @@ app.listen(4000, function(){
             // Send the change through socket and update variables.
             if(req.body.is_on == 1){
                 last_is_on = true;
+				console.log(last_is_on);
             }
             else{
                 last_is_on = false;
