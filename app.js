@@ -322,6 +322,7 @@ app.listen(4000, function(){
 
     // ROUTES:
     app.post('/send-voltage-battery', function(req, res){
+		
         // Accumulate timer
         if (req.body.is_on != 0){
             motor_time += 2;
@@ -336,6 +337,29 @@ app.listen(4000, function(){
             test_is_on = false;
         }
         if (test_is_on != last_is_on){
+			
+			channel = getChannel(SITE_METER.mac);
+			
+			var bod = {
+				entry: {
+					is_on: req.body.is_on,
+					meter_id: req.body.meter_id
+				}
+			};
+				
+			
+            if (channel){
+                channel.push('motor:state', {'motor': { req.body.is_on, req.body.meter_id }, 'meter_id': SITE_METER.mac}, 15000)
+                    .receive("ok", function(msg){ console.log("created message", msg) })
+                    .receive("error", function(reasons){console.log("Failed to save data.", reasons)} )
+                    .receive("timeout", function(){console.log("Networking issue...")} );
+
+
+
+
+                return res.sendStatus(200);
+            }
+			
             // Send the change through socket and update variables.
             if(req.body.is_on == 0){
                 last_is_on = false;
