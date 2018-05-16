@@ -350,8 +350,9 @@ app.listen(4000, function(){
             else{
                 last_is_on = false;
             }
-				
 			
+			console.log("Lookin good.");
+				
             if (channel){
                 channel.push('motor:state', {'motor': { 'is_on': req.body.is_on, 'meter_id': req.body.meter_id }, 'meter_id': SITE_METER.mac}, 15000)
                     .receive("ok", function(msg){ console.log("created message", msg) })
@@ -363,6 +364,8 @@ app.listen(4000, function(){
 
                 return res.sendStatus(200);
             }
+			
+			console.log("Still running.");
 			
             last_voltage = req.body.battery_voltage;
 
