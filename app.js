@@ -365,11 +365,11 @@ app.listen(4000, function(){
             }
 			
             // Send the change through socket and update variables.
-            if(req.body.is_on == 0){
-                last_is_on = false;
+            if(req.body.is_on == 1){
+                last_is_on = true;
             }
             else{
-                last_is_on = true;
+                last_is_on = false;
             }
             last_voltage = req.body.battery_voltage;
 
