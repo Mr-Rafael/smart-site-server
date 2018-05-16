@@ -338,6 +338,8 @@ app.listen(4000, function(){
         }
         if (test_is_on != last_is_on){
 			
+			console.log("Generator has changed state.");
+			
 			channel = getChannel(SITE_METER.mac);
 			
 			var bod = {
