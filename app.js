@@ -350,6 +350,15 @@ app.listen(4000, function(){
 					meter_id: req.body.meter_id
 				}
 			};
+			
+            // Send the change through socket and update variables.
+            if(req.body.is_on == 1){
+                last_is_on = true;
+				console.log(last_is_on);
+            }
+            else{
+                last_is_on = false;
+            }
 				
 			
             if (channel){
@@ -364,14 +373,6 @@ app.listen(4000, function(){
                 return res.sendStatus(200);
             }
 			
-            // Send the change through socket and update variables.
-            if(req.body.is_on == 1){
-                last_is_on = true;
-				console.log(last_is_on);
-            }
-            else{
-                last_is_on = false;
-            }
             last_voltage = req.body.battery_voltage;
 
             var now =Date.now();
