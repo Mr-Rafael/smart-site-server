@@ -19,7 +19,7 @@ var meters = [];
 var MAKE_REQUESTS_TO_ARDUINO = true;
 var gas_array = [];
 var temp_array = [];
-var MAX_DATA_POINTS_AVERAGE = 95;
+var MAX_DATA_POINTS_AVERAGE = 5;
 var last_is_on = false;
 var last_voltage = 0.0;
 var last_time = Date.now();
@@ -155,7 +155,7 @@ app.listen(4000, function(){
               if(data=='{success:true}'){
                 console.log("Succesfully updated.");
                 // Request to enpoint to save changes in database
-                request({ url: 'http://'+'52.203.56.116:4000'+'/api/sensor/update_meter/'+SITE_METER.mac,
+                request({ url: 'http://'+'back.lgb-smartsite.com:4000'+'/api/sensor/update_meter/'+SITE_METER.mac,
                   method: 'PUT',
                   json: {'meter':{
                         'tank_diameter': parseFloat(tank_diameter),
@@ -390,3 +390,4 @@ app.listen(4000, function(){
 
     });
 });
+
