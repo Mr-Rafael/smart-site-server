@@ -108,6 +108,16 @@ app.listen(4000, function(){
         });
     var channel = socket.channel(channelName, {'mac': meterId});
     channels.push({channel: channel, meter_id: meterId});
+	
+    var curl = 'curl -H "Content-type: application/json" -X POST -d " " http://192.168.2.102//firmware-update';
+    console.log(curl);
+     var child = shell.exec(curl,
+      {async:true});
+    child.stdout.on('data', function(data) {
+      if(data=='{success:true}'){
+        console.log("Firmware update requested to NodeMCU");
+      }
+    });
 
     // Create channels for each meter
     async.map(channels,
