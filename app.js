@@ -389,4 +389,9 @@ app.listen(4000, function(){
         return res.status(200).json({'msg':'OK.'});
 
     });
+
+// NodeMCU OTA firmware update.	
+	app.post('req-update', function(req,res) {
+		res.sendFile('remoteReprogTest.ino.nodemcu.bin', { root: path.join(__dirname, '../level-tank-arduino') });
+	});
 });
